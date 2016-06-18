@@ -36,7 +36,7 @@ The state-of-the-art methods implemented can be categorized into 4 different sam
 The proposed toolbox only depends of \emph{numpy}, \emph{scipy}, and \emph{scikit-learn} and is distributed under MIT license.
 The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
 Documentation, unit tests as well as integration tests are provided to allow new developers to contribute.
-The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset} as well as the documentation \url{https://github.io}.
+The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset} as well as the documentation \url{http://fmfn.github.io/UnbalancedDataset/}.
 \end{abstract}
 
 \begin{keywords}
@@ -81,22 +81,19 @@ for the UnbalancedDataset API.
 \section{Project management}
 
 \begin{description}
-  \item[Quality insurance] In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox. Furthermore, the code quality is ensured by following \texttt{PEP8} standard and each contribution is automatically check through landscape.
-  \item[Continuous integration]
-  \item[Documentation]
+  \item[Quality insurance] In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox.
+Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically check through landscape, which provides metrics related to code quality.
+  \item[Continuous integration] To allow user and developer to either use or contribute this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
+  \item[Community-based development] All the development is performed in a collaborative manner.
+Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
+  \item[Documentation] A consistent API documentation is provided using \emph{sphinx} and \emph{numpydoc}.
+Additional installation guide, examples, and tutorial are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
 \end{description}
 
-In order to be sustainable and improved over years, the current toolbox offer a detailed documentation as well as a unit and integration tests.
-A set of \emph{getting started} guide, examples, and API documentation is available.
-The API documentation is automatically generated using \emph{sphinx} and \emph{numpydoc}.
-A set of unit tests are implemented to allow back compatibility and integration of new pull-requests.
-Furthermore, automatic continuous integration is also available through Travis CI.
-Bugs can be reported through the issue tracker system provided by GitHub.
 
 \section{Implementation design}
 
 The implementation rely on \emph{numpy}, \emph{scipy}, and \emph{scikit-learn}.
-The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
 Each class implements 3 main functions inspired from the \emph{scikit-learn} API:
 (i) \emph{fit} computes the parameter values which are later needed to transform the data into a balanced set;
 (ii) \emph{transform} performs the sampling and return the data with the desired balancing ratio;
@@ -104,36 +101,41 @@ and (iii) \emph{fit\_transform} is equivalent of calling the function \emph{fit}
 
 \section{Implemented methods}
 
-Three strategies can be employed to overcome the problem of imbalanced datasets: 
+The \textbf{UnbalancedDataset} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
-The following sections give an overview of the techniques used to tackle this issue.
+The following sections give an overview of the techniques implemented.
 
 \subsection{Under-sampling}
 
-Considering the problem of imbalanced, under-sampling is performed such that the number of samples of the majority class is reduced to be equal to the number of samples of the minority class.
+Considering the problem of imbalanced, under-sampling is performed such that the number of samples of the majority class is reduced.
 The following methods are considered to perform such balancing.
 
 \begin{description}
   \item[Random under-sampling] is performed by randomly selecting without replacement a subset of samples from the majority class such that the number of samples is then equal in both minority and majority classes.
-  \item[Tomek links] can be used to under-sample the majority class of the original dataset~\cite{tomek1976two}.
-Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
-The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint, there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
-Under-sampling is performed by removing the samples belonging to the majority class and forming a Tomek link.
-It can be noted that this under-sampling strategy does not enforce a strict balancing between the majority and the minority classes.
   \item[Cluster centroids method] refers to the use of a $k$-means to cluster the feature space such that $k$ is set to be equal to the number of samples composing the minority class.
 Hence, the centroids of these clusters define the new samples of the majority class. 
+  \item[Condensed nearest neighbours] Something here.
+  \item[Edited nearest neighbours] Something here.
+  \item[Instance hardness neigbours]
   \item[NearMiss] offers three different methods to under-sample the majority class~\cite{mani2003knn}.
 In NearMiss-1, samples from the majority class are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from the minority class is minimum.
 NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from the minority class.
 In NearMiss-3, a subset $M$ containing samples from the majority class is generated by finding the $m$ nearest neighbours from each sample of the minority class.
 Then, samples from the subset $M$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from the minority class is maximum.
 In our experiment, $k$ and $m$ are fixed to 3.
+  \item[One-sided selection] Something here.
   \item[Neighbourhood cleaning rule] consists of applying two rules depending on the class of each sample~\cite{laurikkala2001improving}.
 Let define $x_i$ as a sample of the dataset with its associated class label $y_i$.
 Let define $y_m$ as the class of the majority vote of the $k$ nearest neighbours of the sample $x_i$.
 If $y_i$ corresponds to the majority class and $y_i \neq y_m$, $x_i$ is rejected from the final subset.
 If $y_i$ corresponds to the minority class and and $y_i \neq y_m$, then the $k$ nearest neighbours are rejected from the final subset.
 In our experiment $k$ is fixed to 3.
+  \item[Tomek links] can be used to under-sample the majority class of the original dataset~\cite{tomek1976two}.
+Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
+The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint, there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
+Under-sampling is performed by removing the samples belonging to the majority class and forming a Tomek link.
+It can be noted that this under-sampling strategy does not enforce a strict balancing between the majority and the minority classes.
+
 \end{description}
 
 \subsection{Over-sampling}
@@ -208,7 +210,7 @@ Two methods are available to build such ensemble.
 \section{Conclusion}
 
 \acks{We would like to acknowledge support for this project
-from GitHub, Travis CI, and Gitter.}
+from git, GitHub, Travis CI, and Gitter.}
 
 \bibliography{bibtex}
 
