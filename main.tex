@@ -33,10 +33,10 @@
 \begin{abstract}
 \emph{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
 The state-of-the-art methods implemented can be categorized into 4 different sampling strategies: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
-The proposed toolbox depends of \emph{numpy}, \emph{scipy}, and \emph{scikit-learn}.
+The proposed toolbox only depends of \emph{numpy}, \emph{scipy}, and \emph{scikit-learn} and is distributed under MIT license.
 The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
 Documentation, unit tests as well as integration tests are provided to allow new developers to contribute.
-The toolbox is publicly available in GitHub \url{https://github.io} as well as the documentation \url{https://github.io}.
+The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset} as well as the documentation \url{https://github.io}.
 \end{abstract}
 
 \begin{keywords}
@@ -77,6 +77,30 @@ for the UnbalancedDataset API.
 %Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
 %Furthermore, the detection and classification of minority malignant cases are highly essential so that the sensitivity of developed algorithms need to be maximized.
 %Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not impair the topology of the data.
+
+\section{Project management}
+
+\begin{description}
+  \item[Quality insurance] In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox. Furthermore, the code quality is ensured by following \texttt{PEP8} standard and each contribution is automatically check through landscape.
+  \item[Continuous integration]
+  \item[Documentation]
+\end{description}
+
+In order to be sustainable and improved over years, the current toolbox offer a detailed documentation as well as a unit and integration tests.
+A set of \emph{getting started} guide, examples, and API documentation is available.
+The API documentation is automatically generated using \emph{sphinx} and \emph{numpydoc}.
+A set of unit tests are implemented to allow back compatibility and integration of new pull-requests.
+Furthermore, automatic continuous integration is also available through Travis CI.
+Bugs can be reported through the issue tracker system provided by GitHub.
+
+\section{Implementation design}
+
+The implementation rely on \emph{numpy}, \emph{scipy}, and \emph{scikit-learn}.
+The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
+Each class implements 3 main functions inspired from the \emph{scikit-learn} API:
+(i) \emph{fit} computes the parameter values which are later needed to transform the data into a balanced set;
+(ii) \emph{transform} performs the sampling and return the data with the desired balancing ratio;
+and (iii) \emph{fit\_transform} is equivalent of calling the function \emph{fit} follow the function \emph{transform}.
 
 \section{Implemented methods}
 
@@ -181,32 +205,10 @@ Two methods are available to build such ensemble.
 %   \label{fig:methods}
 % \end{figure}
 
-
-\section{Implementation design}
-
-The implementation rely on \emph{numpy}, \emph{scipy}, and \emph{scikit-learn}.
-The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
-Each class implements 3 main functions inspired from the \emph{scikit-learn} API:
-(i) \emph{fit} computes the parameter values which are later needed to transform the data into a balanced set;
-(ii) \emph{transform} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \emph{fit\_transform} is equivalent of calling the function \emph{fit} follow the function \emph{transform}.
-
-\section{Sustainability and continuous integration}
-
-In order to be sustainable and improved over years, the current toolbox offer a detailed documentation as well as a unit and integration tests.
-A set of \emph{getting started} guide, examples, and API documentation is available.
-The API documentation is automatically generated using \emph{sphinx} and \emph{numpydoc}.
-A set of unit tests are implemented to allow back compatibility and integration of new pull-requests.
-Furthermore, automatic continuous integration is also available through Travis CI.
-Bugs can be reported through the issue tracker system provided by GitHub.
-
-\begin{description}
-  \item[Documentation]
-  \item[Unit tests]
-  \item[Integration tests]
-\end{description}
-
 \section{Conclusion}
+
+\acks{We would like to acknowledge support for this project
+from GitHub, Travis CI, and Gitter.}
 
 \bibliography{bibtex}
 
