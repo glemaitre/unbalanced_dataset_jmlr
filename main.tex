@@ -3,20 +3,29 @@
 \usepackage{jmlr2e}
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
-\jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, and Davyid Victor}
+\jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, and Dayvid V. R. Oliveira}
 
 % Short headings should be running head and authors last names
-\ShortHeadings{A python toolbox to tackle the curse of imbalanced dataset in machine learning}{Lema\^itre, Nogueira, and Victor}
+\ShortHeadings{A python toolbox to tackle the curse of imbalanced datasets in machine learning}{Lema\^itre, Nogueira, and Victor}
 \firstpageno{1}
 
 \begin{document}
 
-\title{A python toolbox to tackle the curse of imbalanced dataset in machine learning}
-\author{Guillaume Lema\^itre \email g.lemaitre58@gmail.com \\ \addr{LE2I UMR6306, CNRS, Arts et M\'etiers, Universit\'e Bourgogne Franche-Comt\'e} \\ \addr{12 rue de la Fonderie, 71200 Le Creusot, France} \\ \addr{ViCOROB, Universitat de Girona} \\ \addr{Campus Montilivi, Edifici P4, 17071 Girona, Spain}
+\title{A python toolbox to tackle the curse of imbalanced datasets in machine learning}
+\author{Guillaume Lema\^itre \email g.lemaitre58@gmail.com \\ 
+    \addr{LE2I UMR6306, CNRS, Arts et M\'etiers, Universit\'e Bourgogne Franche-Comt\'e} \\ 
+    \addr{12 rue de la Fonderie, 71200 Le Creusot, France} \\ 
+    \addr{ViCOROB, Universitat de Girona} \\ 
+    \addr{Campus Montilivi, Edifici P4, 17071 Girona, Spain}
         \AND
-        Fernando Nogueira \email fmfnogueira@gmail.com \\ \addr{theScore, Inc.} \\ \addr{500 King Street West 4\textsuperscript{th} Floor Toronto, Ontario M5V1L9 Canada}
+        Fernando Nogueira \email fmfnogueira@gmail.com \\ 
+        \addr{theScore, Inc.} \\ 
+        \addr{500 King Street West 4\textsuperscript{th} Floor Toronto, Ontario M5V1L9 Canada}
         \AND
-        Dayvid Victor Rodrigues de Oliveira \email victor.dvro@gmail.com \\ \addr{VIISAR Research Group, Centto de Inform\'atica (CIn) - Federal University of Pernambuco (UFPE)} \\ \addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}} 
+        Dayvid V. R. Oliveira \email dvro@cin.ufpe.br \\ 
+        \addr{VIISAR Research Group, Centro de Inform\'atica - Universidade Federal de Pernambuco} \\ 
+        %\addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}} 
+        \addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}} 
 \editor{-}
 
 \maketitle
@@ -36,15 +45,43 @@ Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Le
 
 \section{Introduction}
 
-This problem is frequently referred as ``class imbalance'' problem~\cite{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
-Imbalanced data substantially compromises the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal mis-classification cost~\cite{he2009learning}.
-Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
-Furthermore, the detection and classification of minority malignant cases are highly essential so that the sensitivity of developed algorithms need to be maximized.
-Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not impair the topology of the data.
+Many real world datasets have many samples of some classes (majority classes),
+and only a few samples the other class (minority classes). This imbalance gives
+rise to the ``class imbalance'' problem~\cite{prati2009data} (or ``curse of imbalanced datasets'')
+which is the problem of learning a concept from the class that has a small number of samples compared
+to the other classes. 
+
+The class imbalance problem has been encountered in multiple areas such as 
+telecommunication managements, bioinformatics, fraud detection, and medical diagnosis,
+and has been considered one of the top 10 problems in data mining and 
+pattern recognition~\cite{10problemsInDM:2006}. 
+Medical data, for example, are prone to suffer from class imbalance due to the fact 
+that the portion of diseased patients is far lower than healthy patients,
+and the detection and classification of minority diseased patients are highly essential
+so that they can be treated as soon as possible.
+
+Imbalanced data substantially compromises the learning process, since most of the 
+standard machine learning algorithms expect balanced class distribution or an 
+equal misclassification cost~\cite{he2009learning}. For this reason, several
+approaches have been specifically proposed to handle such datasets.
+
+In this paper, we present the \textbf{UnbalancedDataset} API, 
+\textit{a python toolbox to tackle the curse of imbalanced datasets
+in machine learning}. The following sections present the implemented
+methods, implemented design, sustainability and continuous integration details,
+and finally, the conclusion of this paper, including future functionalities
+for the UnbalancedDataset API.
+
+%This problem is frequently referred as ``class imbalance'' problem~\cite{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
+%Imbalanced data substantially compromises the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal mis-classification cost~\cite{he2009learning}.
+%Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
+%Furthermore, the detection and classification of minority malignant cases are highly essential so that the sensitivity of developed algorithms need to be maximized.
+%Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not impair the topology of the data.
 
 \section{Implemented methods}
 
-Three strategies can be employed to overcome the problem of imbalanced dataset: (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
+Three strategies can be employed to overcome the problem of imbalanced datasets: 
+(i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
 The following sections give an overview of the techniques used to tackle this issue.
 
 \subsection{Under-sampling}
