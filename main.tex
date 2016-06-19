@@ -47,23 +47,21 @@ Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Le
 
 Many real world datasets have many samples of some classes (majority classes),
 and only a few samples the other class (minority classes). This imbalance gives
-rise to the ``class imbalance'' problem~\cite{prati2009data} (or ``curse of imbalanced datasets'')
+rise to the ``class imbalance'' problem~\citep{prati2009data} (or ``curse of imbalanced datasets'')
 which is the problem of learning a concept from the class that has a small number of samples compared
 to the other classes. 
 
 The class imbalance problem has been encountered in multiple areas such as 
 telecommunication managements, bioinformatics, fraud detection, and medical diagnosis,
 and has been considered one of the top 10 problems in data mining and 
-pattern recognition~\cite{10problemsInDM:2006}. 
-Medical data, for example, are prone to suffer from class imbalance due to the fact 
-that the portion of diseased patients is far lower than healthy patients,
-and the detection and classification of minority diseased patients are highly essential
-so that they can be treated as soon as possible.
-
+pattern recognition~\citep{rastgoo2016tackling,yang200610}. 
 Imbalanced data substantially compromises the learning process, since most of the 
 standard machine learning algorithms expect balanced class distribution or an 
-equal misclassification cost~\cite{he2009learning}. For this reason, several
+equal misclassification cost~\citep{he2009learning}. For this reason, several
 approaches have been specifically proposed to handle such datasets.
+
+Such standalone methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
+Up to our knowledge, however, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
 
 In this paper, we present the \textbf{UnbalancedDataset} API, 
 \textit{a python toolbox to tackle the curse of imbalanced datasets
@@ -72,24 +70,24 @@ methods, implemented design, sustainability and continuous integration details,
 and finally, the conclusion of this paper, including future functionalities
 for the UnbalancedDataset API.
 
-%This problem is frequently referred as ``class imbalance'' problem~\cite{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
-%Imbalanced data substantially compromises the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal mis-classification cost~\cite{he2009learning}.
+%This problem is frequently referred as ``class imbalance'' problem~\citep{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
+%Imbalanced data substantially compromises the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal mis-classification cost~\citep{he2009learning}.
 %Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
 %Furthermore, the detection and classification of minority malignant cases are highly essential so that the sensitivity of developed algorithms need to be maximized.
 %Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not impair the topology of the data.
 
 \section{Project management}
 
-\begin{description}
-  \item[Quality insurance] In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox.
+\noindent\textit{Quality insurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox.
 Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically check through landscape, which provides metrics related to code quality.
-  \item[Continuous integration] To allow user and developer to either use or contribute this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
-  \item[Community-based development] All the development is performed in a collaborative manner.
-Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
-  \item[Documentation] A consistent API documentation is provided using \emph{sphinx} and \emph{numpydoc}.
-Additional installation guide, examples, and tutorial are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
-\end{description}
 
+\noindent\textit{Continuous integration} To allow user and developer to either use or contribute this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
+
+\noindent\textit{Community-based development} All the development is performed in a collaborative manner.
+Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
+
+\noindent\textit{Documentation} A consistent API documentation is provided using \emph{sphinx} and \emph{numpydoc}.
+Additional installation guide, examples, and tutorial are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
 
 \section{Implementation design}
 
@@ -105,64 +103,76 @@ The \textbf{UnbalancedDataset} toolbox provides four different strategies to tac
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
 The following sections give an overview of the techniques implemented.
 
+\subsection{Notation and background}
+
+Let $\chi$ an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the subset of samples belonging to the minority and majority class, respectively.
+The balancing ratio of the dataset $\chi$ is defined as:
+
+\begin{equation}
+r_{\chi} = \frac{|\chi_{maj}|}{|\chi_{min}|} \ ,
+\end{equation}
+
+\noindent where $|\cdot|$ denotes the cardinality of a set.
+
+The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} < r_{\chi_{res}}$.
+
 \subsection{Under-sampling}
 
-Considering the problem of imbalanced, under-sampling is performed such that the number of samples of the majority class is reduced.
+Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 The following methods are considered to perform such balancing.
 
-\begin{description}
-  \item[Random under-sampling] is performed by randomly selecting without replacement a subset of samples from the majority class such that the number of samples is then equal in both minority and majority classes.
-  \item[Cluster centroids method] refers to the use of a $k$-means to cluster the feature space such that $k$ is set to be equal to the number of samples composing the minority class.
-Hence, the centroids of these clusters define the new samples of the majority class. 
-  \item[Condensed nearest neighbours] Something here.
-  \item[Edited nearest neighbours] Something here.
-  \item[Instance hardness neigbours]
-  \item[NearMiss] offers three different methods to under-sample the majority class~\cite{mani2003knn}.
-In NearMiss-1, samples from the majority class are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from the minority class is minimum.
-NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from the minority class.
-In NearMiss-3, a subset $M$ containing samples from the majority class is generated by finding the $m$ nearest neighbours from each sample of the minority class.
-Then, samples from the subset $M$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from the minority class is maximum.
-In our experiment, $k$ and $m$ are fixed to 3.
-  \item[One-sided selection] Something here.
-  \item[Neighbourhood cleaning rule] consists of applying two rules depending on the class of each sample~\cite{laurikkala2001improving}.
+\textbf{Random under-sampling} is performed by randomly selecting without replacement a subset of samples from $\chi_{maj}$ to obtain the desired balancing ratio $r_{\chi_{res}}$.
+
+\textbf{Cluster centroids method} refers to the use of a $k$-means to cluster the feature space.
+$k$ corresponds to the number of samples in $\chi_{res_{maj}}$ defined by the desired balancing ratio $r_{\chi_{res}}$.
+Note that the samples in $\chi_{res_{maj}}$ do not correspond to the original samples of $\chi_{maj}$ and are synthetically generated.
+
+\textbf{Condensed nearest neighbours} Something here.
+
+\textbf{Edited nearest neighbours} Something here.
+
+\textbf{Instance hardness threshold}
+
+\textbf{NearMiss} offers three different methods to under-sample the majority class~\citep{mani2003knn}.
+In NearMiss-1, samples $\chi_{maj}$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is minimum.
+NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from $\chi_{min}$.
+In NearMiss-3, a subset $M$ containing samples from the $\chi_{maj}$ is generated by finding the $m$ nearest neighbours from each sample of $\chi_{min}$.
+Then, samples from the subset $M$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is maximum.
+
+\textbf{One-sided selection} Something here.
+
+\textbf{Neighbourhood cleaning rule} consists of applying two rules depending on the class of each sample~\citep{laurikkala2001improving}.
 Let define $x_i$ as a sample of the dataset with its associated class label $y_i$.
 Let define $y_m$ as the class of the majority vote of the $k$ nearest neighbours of the sample $x_i$.
-If $y_i$ corresponds to the majority class and $y_i \neq y_m$, $x_i$ is rejected from the final subset.
-If $y_i$ corresponds to the minority class and and $y_i \neq y_m$, then the $k$ nearest neighbours are rejected from the final subset.
-In our experiment $k$ is fixed to 3.
-  \item[Tomek links] can be used to under-sample the majority class of the original dataset~\cite{tomek1976two}.
-Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
-The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint, there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
-Under-sampling is performed by removing the samples belonging to the majority class and forming a Tomek link.
-It can be noted that this under-sampling strategy does not enforce a strict balancing between the majority and the minority classes.
+If $y_i$ corresponds to $\chi_{maj}$ and $y_i \neq y_m$, $x_i$ is rejected from the final subset.
+If $y_i$ corresponds to $\chi_{min}$ class and and $y_i \neq y_m$, then the $k$ nearest neighbours are rejected from the final subset.
 
-\end{description}
+\textbf{Tomek links} can be used to under-sample $\chi_{maj}$~\citep{tomek1976two}.
+Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
+The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint; there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
+Under-sampling is performed by removing the samples belonging to $\chi_{maj}$ and forming a Tomek link.
 
 \subsection{Over-sampling}
 
 In the contrary, the data balancing can be performed by over-sampling in which the new samples belonging to the minority class are generated aiming at equalizing the number of samples in both classes.
 Two different methods are considered.
-\begin{description}
-\item[Random over-sampling] is performed by randomly replicating the samples of the minority class such that the number of samples is equal in both minority and majority classes.
-\end{description}
-\begin{description}
-\item[SMOTE] is a method to generate synthetic samples in the feature space~\cite{chawla2002smote}.
+
+\textbf{Random over-sampling} is performed by randomly replicating the samples of the minority class such that the number of samples is equal in both minority and majority classes.
+
+\textbf{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
 Let define $x_i$ as a sample belonging to the minority class.
 Let define $x_{nn}$ as a randomly selected sample from the $k$ nearest neighbours of $x_i$, with $k$ set to 3.
 Therefore, a new sample $x_j$ is generated such that $x_j = x_i + \sigma \left( x_{nn} - x_i \right)$, where $\sigma$ is a random number in the interval $\left[0,1\right]$.
 Three other variants of this algorithm exist: (i) SMOTE borderline 1, (ii) SMOTE borderline 2, and (iii) SMOTE SVM.
-\end{description}
 
 \subsection{Combination of over- and under-sampling}
 
 Subsequently, over-sampling methods can be combined with under-sampling methods to clean the subset created.
 In that regard, two different combinations are tested.
 
-\begin{description}
-  \item[SMOTE + Tomek links] are combined to clean the samples created using SMOTE~\cite{batista2003balancing}.
-SMOTE over-sampling can lead to over-fitting which can be avoided by removing the Tomek links from both majority and minority classes~\cite{prati2009data}.
-  \item[SMOTE + edited nearest neighbours] are combined for the same aforementioned reason~\cite{batista2004study}.
-\end{description}
+\textbf{SMOTE + Tomek links} are combined to clean the samples created using SMOTE~\citep{batista2003balancing}.
+SMOTE over-sampling can lead to over-fitting which can be avoided by removing the Tomek links from both majority and minority classes~\citep{prati2009data}.
+\textbf{SMOTE + edited nearest neighbours} are combined for the same aforementioned reason~\citep{batista2004study}.
 
 \subsection{Ensemble learning}
 
@@ -171,10 +181,9 @@ Ensemble methods can offer an alternative to use most of the samples.
 In fact, an ensemble of balanced set will be created and used to later train any classifier.
 Two methods are available to build such ensemble.
 
-\begin{description}
-  \item[Balance cascade]
-  \item[Easy ensemble]
-\end{description}
+\textbf{Balance cascade} Something here
+
+\textbf{Easy ensemble} Something here
 
 % \begin{figure}
 %   \centering
