@@ -1,6 +1,34 @@
 \documentclass[twoside,11pt]{article}
 
 \usepackage{jmlr2e}
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
 \jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, and Dayvid V. R. Oliveira}
@@ -62,8 +90,7 @@ Up to our knowledge, however, there is no python toolbox allowing such processin
 
 In this paper, we present the \texttt{UnbalancedDataset} API, 
 \textit{a python toolbox to tackle the curse of imbalanced datasets
-in machine learning}. The following sections present the implemented
-methods, implemented design, sustainability and continuous integration details,
+in machine learning}. The following sections present the project vision, a snapshot of the API, an overview of the implemented methods,
 and finally, the conclusion of this paper, including future functionalities
 for the \texttt{UnbalancedDataset} API.
 
@@ -78,9 +105,28 @@ Furthermore, the code consistency is ensured by following \texttt{PEP8} standard
 Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
 
 \noindent\textit{Documentation} A consistent API documentation is provided using \texttt{sphinx} and \texttt{numpydoc}.
-Additional installation guide, examples, and tutorial are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
+Additional installation guide and examples are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
+
+\noindent\textit{Project relevance} At the edition time, the repository is visited no less than $2,000$ per week, attracting about $300$ unique visitors per week.
 
 \section{Implementation design}
+
+\begin{lstlisting}[language=Python, caption=Code snippet to over-sample a dataset using SMOTE.]
+from sklearn.datasets import make_classification
+from sklearn.decomposition import PCA
+
+from unbalanced_dataset.over_sampling import SMOTE
+
+# Generate the dataset
+X, y = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
+                           n_informative=3, n_redundant=1, flip_y=0,
+                           n_features=20, n_clusters_per_class=1,
+                           n_samples=5000, random_state=10)
+
+# Apply the SMOTE over-sampling
+sm = SMOTE(ratio='auto', kind='regular')
+X_resampled, y_resampled = sm.fit_transform(X, y)
+\end{lstlisting}
 
 The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
 Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
@@ -103,79 +149,81 @@ The balancing ratio of the dataset $\chi$ is defined as:
 r_{\chi} = \frac{|\chi_{maj}|}{|\chi_{min}|} \ ,
 \end{equation}
 
-\noindent where $|\cdot|$ denotes the cardinality of a set.
-
-The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} < r_{\chi_{res}}$.
+\noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} < r_{\chi_{res}}$.
 
 \subsection{Under-sampling}
 
-Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
-The following methods are considered to perform such balancing.
+Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$.
+The implemented methods can be categorized into 2 groups: (i) fixed under-sampling, (ii) cleaning under-sampling.
 
-\textbf{Random under-sampling} is performed by randomly selecting without replacement a subset of samples from $\chi_{maj}$ to obtain the desired balancing ratio $r_{\chi_{res}}$.
+\emph{Fixed under-sampling} refer to the methods which perform under-sampling to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
+The implemented methods perform the under-sampling based on different criteria: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \textit{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
 
-\textbf{Cluster centroids method} refers to the use of a $k$-means to cluster the feature space.
-$k$ corresponds to the number of samples in $\chi_{res_{maj}}$ defined by the desired balancing ratio $r_{\chi_{res}}$.
-Note that the samples in $\chi_{res_{maj}}$ do not correspond to the original samples of $\chi_{maj}$ and are synthetically generated.
+In the contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
+These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
 
-\textbf{Condensed nearest neighbours} Something here.
+% Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
+% The following methods are considered to perform such balancing.
 
-\textbf{Edited nearest neighbours} Something here.
+% \texttt{Random under-sampling} is performed by randomly selecting without replacement a subset of samples from $\chi_{maj}$ to obtain the desired balancing ratio $r_{\chi_{res}}$.
 
-\textbf{Instance hardness threshold}
+% \texttt{Cluster centroids method} refers to the use of a $k$-means to cluster the feature space.
+% $k$ corresponds to the number of samples in $\chi_{res_{maj}}$ defined by the desired balancing ratio $r_{\chi_{res}}$.
+% Note that the samples in $\chi_{res_{maj}}$ do not correspond to the original samples of $\chi_{maj}$ and are synthetically generated.
 
-\textbf{NearMiss} offers three different methods to under-sample the majority class~\citep{mani2003knn}.
-In NearMiss-1, samples $\chi_{maj}$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is minimum.
-NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from $\chi_{min}$.
-In NearMiss-3, a subset $M$ containing samples from the $\chi_{maj}$ is generated by finding the $m$ nearest neighbours from each sample of $\chi_{min}$.
-Then, samples from the subset $M$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is maximum.
+% \texttt{Condensed nearest neighbours} \citep{hart1968condensed}
 
-\textbf{One-sided selection} Something here.
+% \texttt{Edited nearest neighbours} \citep{wilson1972asymptotic}
 
-\textbf{Neighbourhood cleaning rule} consists of applying two rules depending on the class of each sample~\citep{laurikkala2001improving}.
-Let define $x_i$ as a sample of the dataset with its associated class label $y_i$.
-Let define $y_m$ as the class of the majority vote of the $k$ nearest neighbours of the sample $x_i$.
-If $y_i$ corresponds to $\chi_{maj}$ and $y_i \neq y_m$, $x_i$ is rejected from the final subset.
-If $y_i$ corresponds to $\chi_{min}$ class and and $y_i \neq y_m$, then the $k$ nearest neighbours are rejected from the final subset.
+% \texttt{Instance hardness threshold} \citep{smith2014instance}
 
-\textbf{Tomek links} can be used to under-sample $\chi_{maj}$~\citep{tomek1976two}.
-Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
-The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint; there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
-Under-sampling is performed by removing the samples belonging to $\chi_{maj}$ and forming a Tomek link.
+% \texttt{NearMiss} offers three different methods to under-sample the majority class~\citep{mani2003knn}.
+% In NearMiss-1, samples $\chi_{maj}$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is minimum.
+% NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from $\chi_{min}$.
+% In NearMiss-3, a subset $M$ containing samples from the $\chi_{maj}$ is generated by finding the $m$ nearest neighbours from each sample of $\chi_{min}$.
+% Then, samples from the subset $M$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is maximum.
+
+% \texttt{One-sided selection} \citep{kubat1997addressing}
+
+% \texttt{Neighbourhood cleaning rule} consists of applying two rules depending on the class of each sample~\citep{laurikkala2001improving}.
+% Let define $x_i$ as a sample of the dataset with its associated class label $y_i$.
+% Let define $y_m$ as the class of the majority vote of the $k$ nearest neighbours of the sample $x_i$.
+% If $y_i$ corresponds to $\chi_{maj}$ and $y_i \neq y_m$, $x_i$ is rejected from the final subset.
+% If $y_i$ corresponds to $\chi_{min}$ class and and $y_i \neq y_m$, then the $k$ nearest neighbours are rejected from the final subset.
+
+% \texttt{Tomek links} can be used to under-sample $\chi_{maj}$~\citep{tomek1976two}.
+% Let define a pair of nearest neighbour samples $(x_i, x_j)$ such that their associated class label $y_i \neq y_j$.
+% The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint; there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
+% Under-sampling is performed by removing the samples belonging to $\chi_{maj}$ and forming a Tomek link.
 
 \subsection{Over-sampling}
 
-In the contrary of under-sampling, data balancing can be performed by over-sampling in which new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
-The following methods are currently available.
+In the contrary of under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
+Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
+Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}
 
-\textbf{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 
-\textbf{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
-Let define $x_i$ as a sample belonging to the minority class.
-Let define $x_{nn}$ as a randomly selected sample from the $k$ nearest neighbours of $x_i$, with $k$ set to 3.
-Therefore, a new sample $x_j$ is generated such that $x_j = x_i + \sigma \left( x_{nn} - x_i \right)$, where $\sigma$ is a random number in the interval $\left[0,1\right]$.
-Three other variants of this algorithm exist: (i) SMOTE borderline 1, (ii) SMOTE borderline 2, and (iii) SMOTE SVM.
+% \texttt{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
+% Let define $x_i$ as a sample belonging to the minority class.
+% Let define $x_{nn}$ as a randomly selected sample from the $k$ nearest neighbours of $x_i$, with $k$ set to 3.
+% Therefore, a new sample $x_j$ is generated such that $x_j = x_i + \sigma \left( x_{nn} - x_i \right)$, where $\sigma$ is a random number in the interval $\left[0,1\right]$.
+% Some variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
 \subsection{Combination of over- and under-sampling}
 
-Subsequently, over-sampling methods can be combined with under-sampling methods to clean the subset created.
-In that regard, two different combinations are tested.
-
-\textbf{SMOTE + Tomek links} are combined to clean the samples created using SMOTE~\citep{batista2003balancing}.
-SMOTE over-sampling can lead to over-fitting which can be avoided by removing the Tomek links from both majority and minority classes~\citep{prati2009data}.
-
-\textbf{SMOTE + edited nearest neighbours} are combined for the same aforementioned reason~\citep{batista2004study}.
+\texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
+In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
 
 \subsection{Ensemble learning}
 
-Under-sampling methods implies that samples of the majority class will be lost during the balancing procedure.
-Ensemble methods can offer an alternative to use most of the samples.
-In fact, an ensemble of balanced set will be created and used to later train any classifier.
-Two methods are available to build such ensemble.
+Under-sampling methods implies that samples of the majority class are lost during the balancing procedure.
+Ensemble methods offer an alternative to use most of the samples.
+In fact, an ensemble of balanced sets is created and used to later train any classifier.
+Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
+The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
+The latter differs from the former such that a classifier is used at each iteration to determine the class of the randomly selected samples.
+Misclassified samples will be kept and propagated in the next subset.
 
-\textbf{Balance cascade} Something here
-
-\textbf{Easy ensemble} Something here
 
 % \begin{figure}
 %   \centering
@@ -210,8 +258,11 @@ Two methods are available to build such ensemble.
 
 \section{Conclusion}
 
-\acks{We would like to acknowledge support for this project
-from git, GitHub, Travis CI, and Gitter.}
+In this paper, we shortly presented the foundations of the \texttt{UnbalancedDataset} toolbox vision and API.
+As avenues for future work, the toolbox is intended to be fully part of a \texttt{scikit-learn-contrib} repository.
+
+% \acks{We would like to acknowledge support for this project
+% from git, GitHub, Travis CI, and Gitter.}
 
 \bibliography{bibtex}
 
