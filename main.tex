@@ -60,7 +60,7 @@
 
 \begin{abstract}
 \texttt{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
-The state-of-the-art methods implemented can be categorized into 4 different sampling strategies: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
+The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
 The proposed toolbox only depends of \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
 Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
 The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset}.
@@ -72,15 +72,14 @@ Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Le
 
 \section{Introduction}
 
-Real world datasets commonly show the particularity to have the number of samples of a class under-represented compared to other classes.
+Real world datasets commonly show the particularity to have a number of samples of a given class under-represented compared to other classes.
 This imbalance gives rise to the ``class imbalance'' problem~\citep{prati2009data} (or ``curse of imbalanced datasets'')
-which is the problem of learning a concept from the class that has a small number of samples compared
-to the other classes. 
+which is the problem of learning a concept from the class that has a small number of samples.
 
 The class imbalance problem has been encountered in multiple areas such as 
 telecommunication managements, bioinformatics, fraud detection, and medical diagnosis,
 and has been considered one of the top 10 problems in data mining and 
-pattern recognition~\citep{rastgoo2016tackling,yang200610}. 
+pattern recognition~\citep{yang200610,rastgoo2016tackling}. 
 Imbalanced data substantially compromises the learning process, since most of the 
 standard machine learning algorithms expect balanced class distribution or an 
 equal misclassification cost~\citep{he2009learning}. For this reason, several
@@ -99,7 +98,7 @@ for the \texttt{UnbalancedDataset} API.
 \noindent\textit{Quality insurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox.
 Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically check through landscape, which provides metrics related to code quality.
 
-\noindent\textit{Continuous integration} To allow user and developer to either use or contribute this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
+\noindent\textit{Continuous integration} To allow user and developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
 
 \noindent\textit{Community-based development} All the development is performed in a collaborative manner.
 Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
@@ -132,7 +131,7 @@ The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-le
 Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
 (i) \texttt{fit} computes the parameter values which are later needed to transform the data into a balanced set;
 (ii) \texttt{transform} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \texttt{fit\_transform} is equivalent of calling the function \texttt{fit} follow the function \texttt{transform}.
+and (iii) \texttt{fit\_transform} is equivalent of calling the function \texttt{fit} followed by the function \texttt{transform}.
 
 \section{Implemented methods}
 
@@ -146,10 +145,10 @@ Let $\chi$ an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the su
 The balancing ratio of the dataset $\chi$ is defined as:
 
 \begin{equation}
-r_{\chi} = \frac{|\chi_{maj}|}{|\chi_{min}|} \ ,
+r_{\chi} = \frac{|\chi_{min}|}{|\chi_{majB}|} \ ,
 \end{equation}
 
-\noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} < r_{\chi_{res}}$.
+\noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} > r_{\chi_{res}}$.
 
 \subsection{Under-sampling}
 
