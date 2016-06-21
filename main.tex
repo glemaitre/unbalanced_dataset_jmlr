@@ -31,12 +31,11 @@
 \maketitle
 
 \begin{abstract}
-\emph{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
+\texttt{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
 The state-of-the-art methods implemented can be categorized into 4 different sampling strategies: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
-The proposed toolbox only depends of \emph{numpy}, \emph{scipy}, and \emph{scikit-learn} and is distributed under MIT license.
-The implementation pattern is identical to the \emph{scikit-learn} API to offer compatibility.
-Documentation, unit tests as well as integration tests are provided to allow new developers to contribute.
-The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset} as well as the documentation \url{http://fmfn.github.io/UnbalancedDataset/}.
+The proposed toolbox only depends of \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
+Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
+The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset}.
 \end{abstract}
 
 \begin{keywords}
@@ -45,9 +44,8 @@ Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Le
 
 \section{Introduction}
 
-Many real world datasets have many samples of some classes (majority classes),
-and only a few samples the other class (minority classes). This imbalance gives
-rise to the ``class imbalance'' problem~\citep{prati2009data} (or ``curse of imbalanced datasets'')
+Real world datasets commonly show the particularity to have the number of samples of a class under-represented compared to other classes.
+This imbalance gives rise to the ``class imbalance'' problem~\citep{prati2009data} (or ``curse of imbalanced datasets'')
 which is the problem of learning a concept from the class that has a small number of samples compared
 to the other classes. 
 
@@ -59,22 +57,15 @@ Imbalanced data substantially compromises the learning process, since most of th
 standard machine learning algorithms expect balanced class distribution or an 
 equal misclassification cost~\citep{he2009learning}. For this reason, several
 approaches have been specifically proposed to handle such datasets.
-
 Such standalone methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
 Up to our knowledge, however, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
 
-In this paper, we present the \textbf{UnbalancedDataset} API, 
+In this paper, we present the \texttt{UnbalancedDataset} API, 
 \textit{a python toolbox to tackle the curse of imbalanced datasets
 in machine learning}. The following sections present the implemented
 methods, implemented design, sustainability and continuous integration details,
 and finally, the conclusion of this paper, including future functionalities
-for the UnbalancedDataset API.
-
-%This problem is frequently referred as ``class imbalance'' problem~\citep{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
-%Imbalanced data substantially compromises the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal mis-classification cost~\citep{he2009learning}.
-%Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
-%Furthermore, the detection and classification of minority malignant cases are highly essential so that the sensitivity of developed algorithms need to be maximized.
-%Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not impair the topology of the data.
+for the \texttt{UnbalancedDataset} API.
 
 \section{Project management}
 
@@ -86,20 +77,20 @@ Furthermore, the code consistency is ensured by following \texttt{PEP8} standard
 \noindent\textit{Community-based development} All the development is performed in a collaborative manner.
 Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
 
-\noindent\textit{Documentation} A consistent API documentation is provided using \emph{sphinx} and \emph{numpydoc}.
+\noindent\textit{Documentation} A consistent API documentation is provided using \texttt{sphinx} and \texttt{numpydoc}.
 Additional installation guide, examples, and tutorial are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
 
 \section{Implementation design}
 
-The implementation rely on \emph{numpy}, \emph{scipy}, and \emph{scikit-learn}.
-Each class implements 3 main functions inspired from the \emph{scikit-learn} API:
-(i) \emph{fit} computes the parameter values which are later needed to transform the data into a balanced set;
-(ii) \emph{transform} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \emph{fit\_transform} is equivalent of calling the function \emph{fit} follow the function \emph{transform}.
+The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
+Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
+(i) \texttt{fit} computes the parameter values which are later needed to transform the data into a balanced set;
+(ii) \texttt{transform} performs the sampling and return the data with the desired balancing ratio;
+and (iii) \texttt{fit\_transform} is equivalent of calling the function \texttt{fit} follow the function \texttt{transform}.
 
 \section{Implemented methods}
 
-The \textbf{UnbalancedDataset} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
+The \texttt{UnbalancedDataset} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
 The following sections give an overview of the techniques implemented.
 
@@ -154,10 +145,10 @@ Under-sampling is performed by removing the samples belonging to $\chi_{maj}$ an
 
 \subsection{Over-sampling}
 
-In the contrary, the data balancing can be performed by over-sampling in which the new samples belonging to the minority class are generated aiming at equalizing the number of samples in both classes.
-Two different methods are considered.
+In the contrary of under-sampling, data balancing can be performed by over-sampling in which new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
+The following methods are currently available.
 
-\textbf{Random over-sampling} is performed by randomly replicating the samples of the minority class such that the number of samples is equal in both minority and majority classes.
+\textbf{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 
 \textbf{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
 Let define $x_i$ as a sample belonging to the minority class.
@@ -172,6 +163,7 @@ In that regard, two different combinations are tested.
 
 \textbf{SMOTE + Tomek links} are combined to clean the samples created using SMOTE~\citep{batista2003balancing}.
 SMOTE over-sampling can lead to over-fitting which can be avoided by removing the Tomek links from both majority and minority classes~\citep{prati2009data}.
+
 \textbf{SMOTE + edited nearest neighbours} are combined for the same aforementioned reason~\citep{batista2004study}.
 
 \subsection{Ensemble learning}
