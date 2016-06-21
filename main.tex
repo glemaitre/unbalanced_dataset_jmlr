@@ -153,10 +153,10 @@ r_{\chi} = \frac{|\chi_{min}|}{|\chi_{majB}|} \ ,
 \subsection{Under-sampling}
 
 Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$.
-The implemented methods can be categorized into 2 groups: (i) fixed under-sampling, (ii) cleaning under-sampling.
+The implemented methods can be categorized into 2 groups: (i) fixed under-sampling and (ii) cleaning under-sampling.
 
 \emph{Fixed under-sampling} refer to the methods which perform under-sampling to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
-The implemented methods perform the under-sampling based on different criteria: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \textit{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
+The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
 
 In the contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
 These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
@@ -221,7 +221,7 @@ In fact, an ensemble of balanced sets is created and used to later train any cla
 Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
 The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
 The latter differs from the former such that a classifier is used at each iteration to determine the class of the randomly selected samples.
-Misclassified samples will be kept and propagated in the next subset.
+Misclassified samples are kept and propagated in the next subset.
 
 
 % \begin{figure}
