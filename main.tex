@@ -59,9 +59,10 @@
 \maketitle
 
 \begin{abstract}
-\texttt{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
+\texttt{imbalanced-learn} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
 The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
 The proposed toolbox only depends of \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
+Furthermore, it is fully compatible with \texttt{scikit-learn} and is part of the \texttt{scikit-learn-contrib} supported project.
 Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
 The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset}.
 \end{abstract}
@@ -87,11 +88,11 @@ approaches have been specifically proposed to handle such datasets.
 Such standalone methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
 Up to our knowledge, however, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
 
-In this paper, we present the \texttt{UnbalancedDataset} API, 
+In this paper, we present the \texttt{imbalanced-learn} API, 
 \textit{a python toolbox to tackle the curse of imbalanced datasets
 in machine learning}. The following sections present the project vision, a snapshot of the API, an overview of the implemented methods,
 and finally, the conclusion of this paper, including future functionalities
-for the \texttt{UnbalancedDataset} API.
+for the \texttt{imbalanced-learn} API.
 
 \section{Project management}
 
@@ -107,6 +108,7 @@ Tools as git, GitHub, and gitter are used to ease collaborative programming, iss
 Additional installation guide and examples are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
 
 \noindent\textit{Project relevance} At the edition time, the repository is visited no less than $2,000$ per week, attracting about $300$ unique visitors per week.
+Additionally, the toolbox is supported by \texttt{scikit-learn} through the \texttt{scikit-learn-contrib} projects.
 
 \section{Implementation design}
 
@@ -124,18 +126,18 @@ X, y = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
 
 # Apply the SMOTE over-sampling
 sm = SMOTE(ratio='auto', kind='regular')
-X_resampled, y_resampled = sm.fit_transform(X, y)
+X_resampled, y_resampled = sm.fit_sample(X, y)
 \end{lstlisting}
 
 The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
 Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
 (i) \texttt{fit} computes the parameter values which are later needed to transform the data into a balanced set;
-(ii) \texttt{transform} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \texttt{fit\_transform} is equivalent of calling the function \texttt{fit} followed by the function \texttt{transform}.
+(ii) \texttt{sample} performs the sampling and return the data with the desired balancing ratio;
+and (iii) \texttt{fit\_sample} is equivalent of calling the function \texttt{fit} followed by the function \texttt{transform}.
 
 \section{Implemented methods}
 
-The \texttt{UnbalancedDataset} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
+The \texttt{imbalanced-learn} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
 The following sections give an overview of the techniques implemented.
 
@@ -257,8 +259,7 @@ Misclassified samples are kept and propagated in the next subset.
 
 \section{Conclusion}
 
-In this paper, we shortly presented the foundations of the \texttt{UnbalancedDataset} toolbox vision and API.
-As avenues for future work, the toolbox is intended to be fully part of a \texttt{scikit-learn-contrib} repository.
+In this paper, we shortly presented the foundations of the \texttt{imbalanced-learn} toolbox vision and API.
 
 % \acks{We would like to acknowledge support for this project
 % from git, GitHub, Travis CI, and Gitter.}
