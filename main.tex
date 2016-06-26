@@ -133,7 +133,8 @@ The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-le
 Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
 (i) \texttt{fit} computes the parameter values which are later needed to transform the data into a balanced set;
 (ii) \texttt{sample} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \texttt{fit\_sample} is equivalent of calling the function \texttt{fit} followed by the function \texttt{transform}.
+and (iii) \texttt{fit\_sample} is equivalent of calling the function \texttt{fit} followed by the function \texttt{sample}.
+A class \texttt{Pipeline} is inherited from \texttt{scikit-learn} toolbox to automatically combine \texttt{sampler}, \texttt{transformers}, and \texttt{estimators}.
 
 \section{Implemented methods}
 
