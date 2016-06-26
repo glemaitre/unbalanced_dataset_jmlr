@@ -31,10 +31,10 @@
 \lstset{style=mystyle}
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
-\jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, and Dayvid V. R. Oliveira}
+\jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, Dayvid V. R. Oliveira and Christos K. Aridas}
 
 % Short headings should be running head and authors last names
-\ShortHeadings{A python toolbox to tackle the curse of imbalanced datasets in machine learning}{Lema\^itre, Nogueira, and Victor}
+\ShortHeadings{A python toolbox to tackle the curse of imbalanced datasets in machine learning}{Lema\^itre, Nogueira, Victor, and Aridas}
 \firstpageno{1}
 
 \begin{document}
@@ -53,7 +53,11 @@
         Dayvid V. R. Oliveira \email dvro@cin.ufpe.br \\ 
         \addr{VIISAR Research Group, Centro de Inform\'atica - Universidade Federal de Pernambuco} \\ 
         %\addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}} 
-        \addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}} 
+        \addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}
+        \AND
+        Christos K. Aridas \email char@upatras.gr \\ 
+        \addr{Department of Mathematics, University of Patras} \\ 
+        \addr{University Campus, GR-26110 Patras, Greece}} 
 \editor{-}
 
 \maketitle
@@ -61,7 +65,7 @@
 \begin{abstract}
 \texttt{UnbalancedDataset} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
 The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
-The proposed toolbox only depends of \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
+The proposed toolbox only depends on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
 Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
 The toolbox is publicly available in GitHub \url{https://github.com/fmfn/UnbalancedDataset}.
 \end{abstract}
@@ -96,15 +100,15 @@ for the \texttt{UnbalancedDataset} API.
 \section{Project management}
 
 \noindent\textit{Quality insurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1 of the toolbox.
-Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically check through landscape, which provides metrics related to code quality.
+Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically checked through landscape, which provides metrics related to code quality.
 
 \noindent\textit{Continuous integration} To allow user and developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
 
 \noindent\textit{Community-based development} All the development is performed in a collaborative manner.
-Tools as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and ideas discussions.
+Tools such as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and idea discussions.
 
 \noindent\textit{Documentation} A consistent API documentation is provided using \texttt{sphinx} and \texttt{numpydoc}.
-Additional installation guide and examples are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
+An additional installation guide and examples are also provided and centralized on GitHub\footnote{\url{http://fmfn.github.io/UnbalancedDataset/}}.
 
 \noindent\textit{Project relevance} At the edition time, the repository is visited no less than $2,000$ per week, attracting about $300$ unique visitors per week.
 
@@ -124,20 +128,20 @@ X, y = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
 
 # Apply the SMOTE over-sampling
 sm = SMOTE(ratio='auto', kind='regular')
-X_resampled, y_resampled = sm.fit_transform(X, y)
+X_resampled, y_resampled = sm.fit_sample(X, y)
 \end{lstlisting}
 
-The implementation rely on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
-Each class implements 3 main functions inspired from the \texttt{scikit-learn} API:
-(i) \texttt{fit} computes the parameter values which are later needed to transform the data into a balanced set;
-(ii) \texttt{transform} performs the sampling and return the data with the desired balancing ratio;
-and (iii) \texttt{fit\_transform} is equivalent of calling the function \texttt{fit} followed by the function \texttt{transform}.
+The implementation relies on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
+Each class implements 3 main methods inspired from the \texttt{scikit-learn} API:
+(i) \texttt{fit} computes the parameter values which are later needed to resample the data into a balanced set;
+(ii) \texttt{sample} performs the sampling and returns the data with the desired balancing ratio;
+and (iii) \texttt{fit\_sample} is equivalent to calling the method \texttt{fit} followed by the method \texttt{sample}.
 
 \section{Implemented methods}
 
 The \texttt{UnbalancedDataset} toolbox provides four different strategies to tackle the problem of imbalanced dataset:
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
-The following sections give an overview of the techniques implemented.
+The following subsections give an overview of the techniques implemented.
 
 \subsection{Notation and background}
 
@@ -197,7 +201,7 @@ These criteria are derived from the nearest neighbours rule, namely: (i) \texttt
 
 \subsection{Over-sampling}
 
-In the contrary of under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
+In the contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
 Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
 Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}
 
@@ -215,12 +219,12 @@ In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with 
 
 \subsection{Ensemble learning}
 
-Under-sampling methods implies that samples of the majority class are lost during the balancing procedure.
+Under-sampling methods imply that samples of the majority class are lost during the balancing procedure.
 Ensemble methods offer an alternative to use most of the samples.
 In fact, an ensemble of balanced sets is created and used to later train any classifier.
 Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
 The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
-The latter differs from the former such that a classifier is used at each iteration to determine the class of the randomly selected samples.
+The latter differs from the former in that a classifier is used at each iteration to determine the class of the randomly selected samples.
 Misclassified samples are kept and propagated in the next subset.
 
 
