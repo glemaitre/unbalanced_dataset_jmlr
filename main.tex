@@ -119,14 +119,11 @@ An additional installation guide and examples are also provided and centralized 
 \begin{lstlisting}[language=Python, caption=Code snippet to over-sample a dataset using SMOTE.]
 from sklearn.datasets import make_classification
 from sklearn.decomposition import PCA
-
 from imblearn.over_sampling import SMOTE
 
 # Generate the dataset
-X, y = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
-                           n_informative=3, n_redundant=1, flip_y=0,
-                           n_features=20, n_clusters_per_class=1,
-                           n_samples=5000, random_state=10)
+X, y = make_classification(n_classes=2, weights=[0.1, 0.9],
+                           n_features=20, n_samples=5000)
 
 # Apply the SMOTE over-sampling
 sm = SMOTE(ratio='auto', kind='regular')
@@ -152,7 +149,7 @@ Let $\chi$ an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the su
 The balancing ratio of the dataset $\chi$ is defined as:
 
 \begin{equation}
-r_{\chi} = \frac{|\chi_{min}|}{|\chi_{majB}|} \ ,
+r_{\chi} = \frac{|\chi_{min}|}{|\chi_{maj}|} \ ,
 \end{equation}
 
 \noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} > r_{\chi_{res}}$.
@@ -206,7 +203,7 @@ These criteria are derived from the nearest neighbours rule, namely: (i) \texttt
 
 In the contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
 Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
-Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}
+Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
 
 % \texttt{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
@@ -227,7 +224,7 @@ Ensemble methods offer an alternative to use most of the samples.
 In fact, an ensemble of balanced sets is created and used to later train any classifier.
 Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
 The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
-The latter differs from the former in that a classifier is used at each iteration to determine the class of the randomly selected samples.
+The latter differs such that a classifier is used at each iteration to determine the class of the randomly selected samples.
 Misclassified samples are kept and propagated in the next subset.
 
 
@@ -262,9 +259,10 @@ Misclassified samples are kept and propagated in the next subset.
 %   \label{fig:methods}
 % \end{figure}
 
-\section{Conclusion}
+\section{Future plans and conclusion}
 
 In this paper, we shortly presented the foundations of the \texttt{imbalanced-learn} toolbox vision and API.
+As avenues for future works, additional methods based on prototype/instance selection, generation, and reduction will be added as well as additional user guides.
 
 % \acks{We would like to acknowledge support for this project
 % from git, GitHub, Travis CI, and Gitter.}
