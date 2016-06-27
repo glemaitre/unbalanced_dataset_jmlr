@@ -120,7 +120,7 @@ An additional installation guide and examples are also provided and centralized 
 from sklearn.datasets import make_classification
 from sklearn.decomposition import PCA
 
-from unbalanced_dataset.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE
 
 # Generate the dataset
 X, y = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
@@ -134,11 +134,11 @@ X_resampled, y_resampled = sm.fit_sample(X, y)
 \end{lstlisting}
 
 The implementation relies on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
-Each class implements 3 main methods inspired from the \texttt{scikit-learn} API:
+Each sampler class implements three main methods inspired from the \texttt{scikit-learn} API:
 (i) \texttt{fit} computes the parameter values which are later needed to resample the data into a balanced set;
 (ii) \texttt{sample} performs the sampling and returns the data with the desired balancing ratio;
 and (iii) \texttt{fit\_sample} is equivalent to calling the method \texttt{fit} followed by the method \texttt{sample}.
-A class \texttt{Pipeline} is inherited from \texttt{scikit-learn} toolbox to automatically combine \texttt{sampler}, \texttt{transformers}, and \texttt{estimators}.
+A class \texttt{Pipeline} is inherited from \texttt{scikit-learn} toolbox to automatically combine \texttt{samplers}, \texttt{transformers}, and \texttt{estimators}.
 
 \section{Implemented methods}
 
