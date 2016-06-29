@@ -1,4 +1,4 @@
-BASENAME=main
+BASENAME=lemaitre2016a
 NAME=$(BASENAME).tex
 PDF=$(BASENAME).pdf
 LATEX_COMPILER=pdflatex
