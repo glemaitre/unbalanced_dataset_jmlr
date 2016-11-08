@@ -3,7 +3,13 @@
 \usepackage{jmlr2e}
 \usepackage{listings}
 \usepackage{color}
- 
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{pifont} 
+
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -148,6 +154,39 @@ The \texttt{imbalanced-learn} toolbox provides four different strategies to tack
 (i) under-sampling, (ii) over-sampling, (iii) a combination of both, and (iv) ensemble learning.
 The following subsections give an overview of the techniques implemented.
 
+
+\begin{table}
+  \centering
+  \scriptsize
+   \begin{tabular}{lcccc}
+    \toprule
+    \textbf{Method} & \multicolumn{2}{c}{\textbf{Over-sampling}} & \multicolumn{2}{c}{\textbf{Under-sampling}} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+    & Binary & Mutli-class & Binary & Multiclass \\
+    \midrule
+    ADASYN~\citep{he2008adasyn} & \cmark & \xmark & \xmark & \xmark \\
+    SMOTE~\citep{chawla2002smote,han2005borderline,nguyen2011borderline} & \cmark & \xmark & \xmark & \xmark \\
+    ROS & \cmark & \cmark & \xmark & \xmark \\
+    CC & \xmark & \xmark & \cmark & \cmark \\
+    CNN~\citep{hart1968condensed} & \xmark & \xmark & \cmark & \cmark \\
+    ENN~\citep{wilson1972asymptotic} & \xmark & \xmark & \cmark & \cmark \\
+    RENN & \xmark & \xmark & \cmark & \cmark \\
+    AKNN & \xmark & \xmark & \cmark & \cmark \\
+    NM~\citep{mani2003knn} & \xmark & \xmark & \cmark & \cmark \\
+    NCL~\citep{laurikkala2001improving} & \xmark & \xmark & \cmark & \cmark \\
+    OSS~\citep{kubat1997addressing} & \xmark & \xmark & \cmark & \cmark \\
+    RUS & \xmark & \xmark & \cmark & \cmark \\
+    IHT~\citep{smith2014instance} & \xmark & \xmark & \cmark & \xmark \\
+    TL~\citep{tomek1976two} & \xmark & \xmark & \cmark & \xmark \\
+    BC~\citep{liu2009exploratory} & \xmark & \xmark & \cmark & \xmark \\
+    EE~\citep{liu2009exploratory} & \xmark & \xmark & \cmark & \cmark \\
+    SMOTE + ENN~\citep{batista2003balancing} & \cmark & \xmark & \cmark & \xmark \\
+    SMOTE + TL~\citep{batista2003balancing} & \cmark & \xmark & \cmark & \xmark \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:imbmethods}
+\end{table}
+
 \subsection{Notation and background}
 
 Let $\chi$ be an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the subset of samples belonging to the minority and majority class, respectively.
@@ -165,10 +204,10 @@ Under-sampling refers to the process of reducing the number of samples in $\chi_
 The implemented methods can be categorized into 2 groups: (i) fixed under-sampling and (ii) cleaning under-sampling.
 
 \emph{Fixed under-sampling} refer to the methods which perform under-sampling to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
-The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
+%The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
 
 Contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
-These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
+%These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
 
 % Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 % The following methods are considered to perform such balancing.
@@ -207,8 +246,8 @@ These criteria are derived from the nearest neighbours rule, namely: (i) \texttt
 \subsection{Over-sampling}
 
 Contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
-Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
-Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
+%Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
+%Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
 
 % \texttt{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
@@ -219,18 +258,20 @@ Different variants of this algorithm have been proposed: \texttt{SMOTE borderlin
 
 \subsection{Combination of over- and under-sampling}
 
-\texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
-In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
+Over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
+
+%\texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
+%In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
 
 \subsection{Ensemble learning}
 
 Under-sampling methods imply that samples of the majority class are lost during the balancing procedure.
 Ensemble methods offer an alternative to use most of the samples.
 In fact, an ensemble of balanced sets is created and used to later train any classifier.
-Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
-The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
-The latter differs such that a classifier is used at each iteration to determine the class of the randomly selected samples.
-Misclassified samples are kept and propagated in the next subset.
+%Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
+%The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
+%The latter differs such that a classifier is used at each iteration to determine the class of the randomly selected samples.
+%Misclassified samples are kept and propagated in the next subset.
 
 
 % \begin{figure}
