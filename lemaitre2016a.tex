@@ -196,8 +196,7 @@ r_{\chi} = \frac{|\chi_{min}|}{|\chi_{maj}|} \ ,
 
 \noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} > r_{\chi_{res}}$.
 
-\subsection{Under-sampling}
-
+\paragraph{Under-sampling}
 Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$.
 The implemented methods can be categorized into 2 groups: (i) fixed under-sampling and (ii) cleaning under-sampling.
 
@@ -241,8 +240,7 @@ Contrary to the previous methods, \emph{cleaning under-sampling} do not allow to
 % The pair $(x_i, x_j)$ is defined as a Tomek link if, by relaxing the class label differentiation constraint; there is no other sample $x_k$ defined as the nearest neighbour of either $x_i$ or $x_j$.
 % Under-sampling is performed by removing the samples belonging to $\chi_{maj}$ and forming a Tomek link.
 
-\subsection{Over-sampling}
-
+\paragraph{Over-sampling}
 Contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
 %Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
 %Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
@@ -254,15 +252,13 @@ Contrary to under-sampling, data balancing can be performed by over-sampling suc
 % Therefore, a new sample $x_j$ is generated such that $x_j = x_i + \sigma \left( x_{nn} - x_i \right)$, where $\sigma$ is a random number in the interval $\left[0,1\right]$.
 % Some variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
-\subsection{Combination of over- and under-sampling}
-
+\paragraph{Combination of over- and under-sampling}
 Over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
 
 %\texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
 %In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
 
-\subsection{Ensemble learning}
-
+\paragraph{Ensemble learning}
 Under-sampling methods imply that samples of the majority class are lost during the balancing procedure.
 Ensemble methods offer an alternative to use most of the samples.
 In fact, an ensemble of balanced sets is created and used to later train any classifier.
