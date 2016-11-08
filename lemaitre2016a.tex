@@ -31,7 +31,7 @@
 \lstset{style=mystyle}
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
-\jmlrheading{7}{2016}{1-5}{7/16}{-}{Guillaume Lema\^itre, Fernando Nogueira, 
+\jmlrheading{17}{2016}{1-5}{7/16; Revised 7/16}{11/2016}{Guillaume Lema\^itre, Fernando Nogueira, 
 %Dayvid V. R. Oliveira - removing my name.
 and Christos K. Aridas}
 
@@ -61,7 +61,7 @@ and Christos K. Aridas}
         Christos K. Aridas \email char@upatras.gr \\ 
         \addr{University of Patras} \\ 
         \addr{University Campus, 26504 Patras, Greece}} 
-\editor{-}
+\editor{Geoff Holmes}
 
 \maketitle
 
@@ -71,7 +71,7 @@ The implemented state-of-the-art methods can be categorized into 4 groups: (i) u
 The proposed toolbox only depends on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
 Furthermore, it is fully compatible with \texttt{scikit-learn} and is part of the \texttt{scikit-learn-contrib} supported project.
 Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
-The toolbox is publicly available in GitHub \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
+The toolbox is publicly available in GitHub \\ \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
 \end{abstract}
 
 \begin{keywords}
@@ -103,7 +103,7 @@ for the \texttt{imbalanced-learn} API.
 
 \section{Project management}
 
-\noindent\textit{Quality insurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1.8 of the toolbox.
+\noindent\textit{Quality assurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1.8 of the toolbox.
 Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically checked through landscape, which provides metrics related to code quality.
 
 \noindent\textit{Continuous integration} To allow user and developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
@@ -148,7 +148,7 @@ The following subsections give an overview of the techniques implemented.
 
 \subsection{Notation and background}
 
-Let $\chi$ an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the subset of samples belonging to the minority and majority class, respectively.
+Let $\chi$ be an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the subset of samples belonging to the minority and majority class, respectively.
 The balancing ratio of the dataset $\chi$ is defined as:
 
 \begin{equation}
@@ -165,7 +165,7 @@ The implemented methods can be categorized into 2 groups: (i) fixed under-sampli
 \emph{Fixed under-sampling} refer to the methods which perform under-sampling to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
 
-In the contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
+Contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
 These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
 
 % Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
@@ -204,7 +204,7 @@ These criteria are derived from the nearest neighbours rule, namely: (i) \texttt
 
 \subsection{Over-sampling}
 
-In the contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
+Contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
 Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
 Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
