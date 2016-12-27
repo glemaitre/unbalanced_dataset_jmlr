@@ -5,7 +5,7 @@
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{pifont} 
+\usepackage{pifont}
 
 \newcommand{\cmark}{\ding{51}}
 \newcommand{\xmark}{\ding{55}}
@@ -14,32 +14,32 @@
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
+
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
 }
- 
+
 \lstset{style=mystyle}
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
-\jmlrheading{17}{2016}{1-5}{7/16; Revised 7/16}{11/2016}{Guillaume Lema\^itre, Fernando Nogueira, 
-%Dayvid V. R. Oliveira - removing my name.
-and Christos K. Aridas}
+\jmlrheading{17}{2016}{1-5}{7/16; Revised 7/16}{11/16}{Guillaume Lema\^itre, Fernando Nogueira,
+  % Dayvid V. R. Oliveira - removing my name.
+  and Christos K. Aridas}
 
 % Short headings should be running head and authors last names
 \ShortHeadings{A Python Toolbox to Tackle the Curse of Imbalanced Datasets in Machine Learning}{Lema\^itre, Nogueira, and Aridas}
@@ -48,40 +48,38 @@ and Christos K. Aridas}
 \begin{document}
 
 \title{Imbalanced-learn: A Python Toolbox to Tackle the Curse of Imbalanced Datasets in Machine Learning}
-\author{Guillaume Lema\^itre \email g.lemaitre58@gmail.com \\ 
-    \addr{LE2I UMR6306, CNRS, Arts et M\'etiers, Univ. Bourgogne Franche-Comt\'e} \\ 
-    \addr{12 rue de la Fonderie, 71200 Le Creusot, France} \\ 
-    \addr{ViCOROB, Universitat de Girona} \\ 
-    \addr{Campus Montilivi, Edifici P4, 17071 Girona, Spain}
-        \AND
-        Fernando Nogueira \email fmfnogueira@gmail.com \\ 
-        \addr{ShoppeAI} \\ 
-        \addr{488 Wellington Street West, Suite 304, Toronto, Ontario M5V 1E3, Canada}
-        % REMOVING MY NAME AS COAUTHOR
-        %\AND
-        %Dayvid V. R. Oliveira \email dvro@cin.ufpe.br \\ 
-        %\addr{VIISAR Research Group, Centro de Inform\'atica - Universidade Federal de Pernambuco} \\ 
-        %%\addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}} 
-        %\addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}
-        \AND
-        Christos K. Aridas \email char@upatras.gr \\ 
-        \addr{University of Patras} \\ 
-        \addr{University Campus, 26504 Patras, Greece}} 
+\author{Guillaume Lema\^itre \email guillaume.lemaitre@inria.fr \\
+  \addr{Parietal team, Inria, CEA, Universit\'e Paris-Saclay} \\
+  \addr{1 Rue Honor\'e d'Estienne d'Orves, 91120 Palaiseau, France}
+  \AND
+  Fernando Nogueira \email fmfnogueira@gmail.com \\
+  \addr{ShoppeAI} \\
+  \addr{488 Wellington Street West, Suite 304, Toronto, Ontario M5V 1E3, Canada}
+  % REMOVING MY NAME AS COAUTHOR
+  % \AND
+  % Dayvid V. R. Oliveira \email dvro@cin.ufpe.br \\
+  % \addr{VIISAR Research Group, Centro de Inform\'atica - Universidade Federal de Pernambuco} \\
+  %% \addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}}
+  % \addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}
+  \AND
+  Christos K. Aridas \email char@upatras.gr \\
+  \addr{University of Patras} \\
+  \addr{University Campus, 26504 Patras, Greece}}
 \editor{Geoff Holmes}
 
 \maketitle
 
 \begin{abstract}%
-\texttt{imbalanced-learn} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
-The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
-The proposed toolbox only depends on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
-Furthermore, it is fully compatible with \texttt{scikit-learn} and is part of the \texttt{scikit-learn-contrib} supported project.
-Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
-The toolbox is publicly available in GitHub \\ \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
+  \texttt{imbalanced-learn} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
+  The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
+  The proposed toolbox only depends on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
+  Furthermore, it is fully compatible with \texttt{scikit-learn} and is part of the \texttt{scikit-learn-contrib} supported project.
+  Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
+  The toolbox is publicly available in GitHub \\ \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
 \end{abstract}
 
 \begin{keywords}
-Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Learning, Python.
+  Imbalanced Dataset, Over-Sampling, Under-Sampling, Ensemble Learning, Machine Learning, Python.
 \end{keywords}
 
 \section{Introduction}
@@ -90,26 +88,26 @@ Real world datasets commonly show the particularity to have a number of samples 
 This imbalance gives rise to the ``class imbalance'' problem~\citep{prati2009data} (or ``curse of imbalanced datasets'')
 which is the problem of learning a concept from the class that has a small number of samples.
 
-The class imbalance problem has been encountered in multiple areas such as 
+The class imbalance problem has been encountered in multiple areas such as
 telecommunication managements, bioinformatics, fraud detection, and medical diagnosis,
-and has been considered one of the top 10 problems in data mining and 
-pattern recognition~\citep{yang200610,rastgoo2016tackling}. 
-Imbalanced data substantially compromises the learning process, since most of the 
-standard machine learning algorithms expect balanced class distribution or an 
+and has been considered one of the top 10 problems in data mining and
+pattern recognition~\citep{yang200610,rastgoo2016tackling}.
+Imbalanced data substantially compromises the learning process, since most of the
+standard machine learning algorithms expect balanced class distribution or an
 equal misclassification cost~\citep{he2009learning}. For this reason, several
 approaches have been specifically proposed to handle such datasets.
 Such standalone methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
 Up to our knowledge, however, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
 
-In this paper, we present the \texttt{imbalanced-learn} API, 
+In this paper, we present the \texttt{imbalanced-learn} API,
 \textit{a python toolbox to tackle the curse of imbalanced datasets
-in machine learning}. The following sections present the project vision, a snapshot of the API, an overview of the implemented methods,
+  in machine learning}. The following sections present the project vision, a snapshot of the API, an overview of the implemented methods,
 and finally, the conclusion of this paper, including future functionalities
 for the \texttt{imbalanced-learn} API.
 
 \section{Project management}
 
-\noindent\textit{Quality assurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.1.8 of the toolbox.
+\noindent\textit{Quality assurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.2 of the toolbox.
 Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically checked through landscape, which provides metrics related to code quality.
 
 \noindent\textit{Continuous integration} To allow user and developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
@@ -144,7 +142,11 @@ Each sampler class implements three main methods inspired from the \texttt{sciki
 (i) \texttt{fit} computes the parameter values which are later needed to resample the data into a balanced set;
 (ii) \texttt{sample} performs the sampling and returns the data with the desired balancing ratio;
 and (iii) \texttt{fit\_sample} is equivalent to calling the method \texttt{fit} followed by the method \texttt{sample}.
-A class \texttt{Pipeline} is inherited from \texttt{scikit-learn} toolbox to automatically combine \texttt{samplers}, \texttt{transformers}, and \texttt{estimators}.
+A class \texttt{Pipeline} is inherited from \texttt{scikit-learn}
+toolbox to automatically combine \texttt{samplers},
+\texttt{transformers}, and \texttt{estimators}.
+Additionally, we provide some specific state-of-the-art metrics to evaluate
+classification performance.
 
 \section{Implemented methods}
 
@@ -156,11 +158,11 @@ The following subsections give an overview of the techniques implemented.
 \begin{table}
   \centering
   \scriptsize
-   \begin{tabular}{lcccc}
+  \begin{tabular}{lcccc}
     \toprule
     \textbf{Method} & \multicolumn{2}{c}{\textbf{Over-sampling}} & \multicolumn{2}{c}{\textbf{Under-sampling}} \\
     \cmidrule(lr){2-3}\cmidrule(lr){4-5}
-    & Binary & Mutli-class & Binary & Multiclass \\
+                    & Binary & Mutli-class & Binary & Multiclass \\
     \midrule
     ADASYN~\citep{he2008adasyn} & \cmark & \xmark & \xmark & \xmark \\
     SMOTE~\citep{chawla2002smote,han2005borderline,nguyen2011borderline} & \cmark & \xmark & \xmark & \xmark \\
@@ -191,7 +193,7 @@ Let $\chi$ be an imbalanced dataset with $\chi_{min}$ and $\chi_{maj}$ being the
 The balancing ratio of the dataset $\chi$ is defined as:
 
 \begin{equation}
-r_{\chi} = \frac{|\chi_{min}|}{|\chi_{maj}|} \ ,
+  r_{\chi} = \frac{|\chi_{min}|}{|\chi_{maj}|} \ ,
 \end{equation}
 
 \noindent where $|\cdot|$ denotes the cardinality of a set. The balancing process is equivalent to resample $\chi$ into a new dataset $\chi_{res}$ such that $r_{\chi} > r_{\chi_{res}}$.
@@ -199,28 +201,19 @@ r_{\chi} = \frac{|\chi_{min}|}{|\chi_{maj}|} \ ,
 \paragraph{Under-sampling}
 Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$.
 The implemented methods can be categorized into 2 groups: (i) fixed under-sampling and (ii) cleaning under-sampling.
-
 \emph{Fixed under-sampling} refer to the methods which perform under-sampling to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
-%The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
-
+% The implemented methods perform the under-sampling based on different criteria such as: (i) random selection, (ii) clustering, (iii) nearest neighbours rule (i.e., \texttt{NearMiss}~\citep{mani2003knn}), and (iv) classification accuracy (i.e., \texttt{instance hardness threshold}~\citep{smith2014instance}).
 Contrary to the previous methods, \emph{cleaning under-sampling} do not allow to reach specifically the balancing ratio $r_{\chi_{res}}$, but rather clean the feature space based on some empirical criteria.
-%These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
-
+% These criteria are derived from the nearest neighbours rule, namely: (i) \texttt{condensed nearest neighbours}~\citep{hart1968condensed}, (ii) \texttt{edited nearest neighbours}~\citep{wilson1972asymptotic}, (iii) \texttt{one-sided selection}~\citep{kubat1997addressing}, (iv) \texttt{neighbourhood cleaning rule}~\citep{laurikkala2001improving}, and (v) \texttt{Tomek links}~\citep{tomek1976two}.
 % Under-sampling refers to the process of reducing the number of samples in $\chi_{maj}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$.
 % The following methods are considered to perform such balancing.
-
 % \texttt{Random under-sampling} is performed by randomly selecting without replacement a subset of samples from $\chi_{maj}$ to obtain the desired balancing ratio $r_{\chi_{res}}$.
-
 % \texttt{Cluster centroids method} refers to the use of a $k$-means to cluster the feature space.
 % $k$ corresponds to the number of samples in $\chi_{res_{maj}}$ defined by the desired balancing ratio $r_{\chi_{res}}$.
 % Note that the samples in $\chi_{res_{maj}}$ do not correspond to the original samples of $\chi_{maj}$ and are synthetically generated.
-
 % \texttt{Condensed nearest neighbours} \citep{hart1968condensed}
-
 % \texttt{Edited nearest neighbours} \citep{wilson1972asymptotic}
-
 % \texttt{Instance hardness threshold} \citep{smith2014instance}
-
 % \texttt{NearMiss} offers three different methods to under-sample the majority class~\citep{mani2003knn}.
 % In NearMiss-1, samples $\chi_{maj}$ are selected such that for each sample, the average distance to the $k$ nearest neighbour samples from $\chi_{min}$ is minimum.
 % NearMiss-2 diverges from NearMiss-1 by considering the $k$ farthest neighbours samples from $\chi_{min}$.
@@ -242,8 +235,8 @@ Contrary to the previous methods, \emph{cleaning under-sampling} do not allow to
 
 \paragraph{Over-sampling}
 Contrary to under-sampling, data balancing can be performed by over-sampling such that new samples are generated in $\chi_{min}$ to reach the balancing ratio $r_{\chi_{res}}$.
-%Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
-%Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
+% Two methods are currently available: (i) \texttt{Random over-sampling} is performed by randomly replicating the samples of $\chi_{min}$ to obtain the appropriate balancing ratio $r_{\chi_{res}}$ and \texttt{SMOTE} which randomly generate new samples between tuple of nearest neighbours of $\chi_{min}$~\citep{chawla2002smote}.
+% Different variants of this algorithm have been proposed: \texttt{SMOTE borderline 1 \& 2}~\citep{han2005borderline} and \texttt{SMOTE SVM}~\citep{nguyen2011borderline}.
 
 
 % \texttt{SMOTE} is a method to generate synthetic samples in the feature space~\citep{chawla2002smote}.
@@ -255,17 +248,17 @@ Contrary to under-sampling, data balancing can be performed by over-sampling suc
 \paragraph{Combination of over- and under-sampling}
 Over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
 
-%\texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
-%In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
+% \texttt{SMOTE} over-sampling can lead to over-fitting which can be avoided by applying cleaning under-sampling methods~\citep{prati2009data}.
+% In that regard, \cite{batista2003balancing} combined \texttt{SMOTE} either with \texttt{Tomek links} or \texttt{edited nearest neighbours}.
 
 \paragraph{Ensemble learning}
 Under-sampling methods imply that samples of the majority class are lost during the balancing procedure.
 Ensemble methods offer an alternative to use most of the samples.
 In fact, an ensemble of balanced sets is created and used to later train any classifier.
-%Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
-%The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
-%The latter differs such that a classifier is used at each iteration to determine the class of the randomly selected samples.
-%Misclassified samples are kept and propagated in the next subset.
+% Two methods are available to build such ensemble proposed by~\cite{liu2009exploratory}: \texttt{EasyEnsemble} and \texttt{BalanceCascade}.
+% The former is based on iteratively applying the \texttt{random under-sampling} method to build several sets, each of them with a desired balancing ratio $r_{\chi_{res}}$.
+% The latter differs such that a classifier is used at each iteration to determine the class of the randomly selected samples.
+% Misclassified samples are kept and propagated in the next subset.
 
 
 % \begin{figure}
