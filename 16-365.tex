@@ -62,20 +62,22 @@
   %% \addr{Av. Prof. Luiz Freire, s/n - Cidade Universitária Recife - PE, 50740-540, Brazil}}
   % \addr{Av. Jornalista Aníbal Fernandes, s/n - Cidade Universitária - PE, 50740-560, Brazil}
   \AND
-  Christos K. Aridas \email char@upatras.gr \\
-  \addr{University of Patras} \\
-  \addr{University Campus, 26504 Patras, Greece}}
+  Christos K. Aridas \email char@upatras.gr \\ 
+  \addr{Computational Intelligence Laboratory} \\
+  \addr{Department of Mathematics} \\ 
+  \addr{University of Patras} \\ 
+  \addr{GR-26504 Patras, Greece}} 
 \editor{Geoff Holmes}
 
 \maketitle
 
 \begin{abstract}%
   \texttt{imbalanced-learn} is an open-source python toolbox aiming at providing a wide range of methods to cope with the problem of imbalanced dataset frequently encountered in machine learning and pattern recognition.
-  The implemented state-of-the-art methods can be categorized into 4 groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
-  The proposed toolbox only depends on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
+  The implemented state-of-the-art methods can be categorized into four groups: (i) under-sampling, (ii) over-sampling, (iii) combination of over- and under-sampling, and (iv) ensemble learning methods.
+  The proposed toolbox depends only on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn} and is distributed under MIT license.
   Furthermore, it is fully compatible with \texttt{scikit-learn} and is part of the \texttt{scikit-learn-contrib} supported project.
   Documentation, unit tests as well as integration tests are provided to ease usage and contribution.
-  The toolbox is publicly available in GitHub \\ \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
+  The toolbox is publicly available on GitHub \\ \url{https://github.com/scikit-learn-contrib/imbalanced-learn}.
 \end{abstract}
 
 \begin{keywords}
@@ -90,19 +92,19 @@ which is the problem of learning a concept from the class that has a small numbe
 
 The class imbalance problem has been encountered in multiple areas such as
 telecommunication managements, bioinformatics, fraud detection, and medical diagnosis,
-and has been considered one of the top 10 problems in data mining and
+and has been considered one of the top ten problems in data mining and
 pattern recognition~\citep{yang200610,rastgoo2016tackling}.
 Imbalanced data substantially compromises the learning process, since most of the
 standard machine learning algorithms expect balanced class distribution or an
 equal misclassification cost~\citep{he2009learning}. For this reason, several
 approaches have been specifically proposed to handle such datasets.
-Such standalone methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
-Up to our knowledge, however, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
+Some of these methods have been implemented mainly in R language~\citep{torgo2010data,kuhn2015caret,dal2013racing}.
+Up to our knowledge, there is no python toolbox allowing such processing while cutting edge machine learning toolboxes are available~\citep{pedregosa2011scikit,sonnenburg2010shogun}.
 
 In this paper, we present the \texttt{imbalanced-learn} API,
 \textit{a python toolbox to tackle the curse of imbalanced datasets
   in machine learning}. The following sections present the project vision, a snapshot of the API, an overview of the implemented methods,
-and finally, the conclusion of this paper, including future functionalities
+and finally, we conclude this work by including future functionalities
 for the \texttt{imbalanced-learn} API.
 
 \section{Project management}
@@ -110,7 +112,7 @@ for the \texttt{imbalanced-learn} API.
 \noindent\textit{Quality assurance} In order to ensure code quality, a set of unit tests is provided leading to a coverage of 99 \% for the release 0.2 of the toolbox.
 Furthermore, the code consistency is ensured by following \texttt{PEP8} standards and each new contribution is automatically checked through landscape, which provides metrics related to code quality.
 
-\noindent\textit{Continuous integration} To allow user and developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
+\noindent\textit{Continuous integration} To allow both the user and the developer to either use or contribute to this toolbox, Travis CI is used to easily integrate new code and ensure back-compatibility.
 
 \noindent\textit{Community-based development} All the development is performed in a collaborative manner.
 Tools such as git, GitHub, and gitter are used to ease collaborative programming, issue tracking, code integration, and idea discussions.
@@ -118,7 +120,7 @@ Tools such as git, GitHub, and gitter are used to ease collaborative programming
 \noindent\textit{Documentation} A consistent API documentation is provided using \texttt{sphinx} and \texttt{numpydoc}.
 An additional installation guide and examples are also provided and centralized on GitHub\footnote{\url{https://github.com/scikit-learn-contrib/imbalanced-learn}}.
 
-\noindent\textit{Project relevance} At the edition time, the repository is visited no less than $2,000$ per week, attracting about $300$ unique visitors per week.
+\noindent\textit{Project relevance} At the edition time, the repository is visited no less than $2,000$ times per week, attracting about $300$ unique visitors per week.
 Additionally, the toolbox is supported by \texttt{scikit-learn} through the \texttt{scikit-learn-contrib} projects.
 
 \section{Implementation design}
@@ -139,14 +141,16 @@ X_resampled, y_resampled = sm.fit_sample(X, y)
 
 The implementation relies on \texttt{numpy}, \texttt{scipy}, and \texttt{scikit-learn}.
 Each sampler class implements three main methods inspired from the \texttt{scikit-learn} API:
-(i) \texttt{fit} computes the parameter values which are later needed to resample the data into a balanced set;
+(i) \texttt{fit} computes several statistics which are later needed to resample the data into a balanced set;
 (ii) \texttt{sample} performs the sampling and returns the data with the desired balancing ratio;
 and (iii) \texttt{fit\_sample} is equivalent to calling the method \texttt{fit} followed by the method \texttt{sample}.
-A class \texttt{Pipeline} is inherited from \texttt{scikit-learn}
+A class \texttt{Pipeline} is inherited from the \texttt{scikit-learn}
 toolbox to automatically combine \texttt{samplers},
 \texttt{transformers}, and \texttt{estimators}.
 Additionally, we provide some specific state-of-the-art metrics to evaluate
 classification performance.
+
+\bigbreak
 
 \section{Implemented methods}
 
